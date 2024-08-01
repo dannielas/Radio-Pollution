@@ -1,0 +1,20 @@
+Instructions: 
+- Run this code in the raspberry pi. 
+- This is the path to the file in the raspberry pi: /home/dsantibanez/Downloads/recording_attempt.py
+
+
+
+import time
+
+from picamera2 import Picamera2
+from picamera2.encoders import H264Encoder
+
+cam = Picamera2()
+video_config = cam.create_video_configuration()
+cam.configure(video_config)
+
+encoder = H264Encoder(10000000)
+
+cam.start_recording(encoder, '/home/dsantibanez/Downloads/photos/VIDEO.h264')
+time.sleep(10)
+cam.stop_recording()
