@@ -1,0 +1,38 @@
+Instructions:
+- Run this code in the raspberry pi (with either Python or Thonny) 
+- This is the path to find the code in the files of the RPI: /home/dsantibanez/Downloads/livevideo.py
+
+
+import cv2
+from picamera2 import Picamera2
+
+def main():
+    # Initialize the camera
+    camera = Picamera2()
+
+    # Create and configure the camera for preview
+    preview_config = camera.create_preview_configuration(main={"size": (640, 480)})
+    camera.configure(preview_config)
+
+    # Start the camera
+    camera.start()
+
+    try:
+        # Main loop to display camera feed
+        while True:
+            # Capture the frame
+            frame = camera.capture_array()
+            
+            # Display the frame
+            cv2.imshow('Raspberry Pi Camera', frame)
+            
+            # Exit on pressing 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+    finally:
+        # Stop the camera and close all OpenCV windows
+        camera.stop()
+        cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    main()
